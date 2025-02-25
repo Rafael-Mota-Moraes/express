@@ -1,6 +1,14 @@
+import { User } from "../models/User.js";
+
 export default class Home {
-  renderHome(req, res) {
-    res.render("pages/index");
+  async renderHome(req, res) {
+    try {
+      const users = await User.findAll();
+      res.render("pages/index", { users });
+    } catch (error) {
+      console.error("Erro ao buscar usuários:", error);
+      res.status(500).send("Erro interno no servidor");
+    }
   }
 
   calcularMedia(req, res) {

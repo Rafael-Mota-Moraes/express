@@ -1,5 +1,48 @@
 <%- include('../partials/head'); %>
 
-<h1 class="text-xl font-bold bg-red-900">Olá Mundo.</h1>
+<h2>Cadastrar Novo Usuário</h2>
+<form action="/user/create-user" method="POST">
+  <label for="name">Nome:</label>
+  <input type="text" id="name" name="name" required />
 
-<%- include('../partials/head'); %>
+  <label for="email">E-mail:</label>
+  <input type="email" id="email" name="email" required />
+
+  <button type="submit">Cadastrar</button>
+</form>
+
+<% if (users.length > 0) { %>
+<h1>Usuários Cadastrados</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% users.forEach(user => { %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td>
+        <form
+          action="/user/delete-user/<%= user.id %>"
+          method="POST"
+          onsubmit="return confirm('Tem certeza que deseja excluir este usuário?');"
+        >
+          <button type="submit">Deletar</button>
+        </form>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<% } else { %>
+<p>Nenhum usuário cadastrado.</p>
+<% } %> <%- include('../partials/head'); %>
